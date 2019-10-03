@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="multi_cam"	type="multi_cam.py"	name="multi_cam" />
+</launch>
