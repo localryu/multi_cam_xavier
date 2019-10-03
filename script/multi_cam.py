@@ -10,7 +10,7 @@ from cv_bridge import CvBridge, CvBridgeError
 
 
 class CAM:
-	def g_pipeline_0(self,capture_width=1280,capture_height=720,display_width=1280,display_height=720,framerate=120,flip_method=6,):
+	def g_pipeline_0(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=0 ! "
 			"video/x-raw(memory:NVMM), "
@@ -22,7 +22,7 @@ class CAM:
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
 
-	def g_pipeline_1(self,capture_width=1280,capture_height=720,display_width=1280,display_height=720,framerate=120,flip_method=6,):
+	def g_pipeline_1(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=1 ! "
 			"video/x-raw(memory:NVMM), "
@@ -34,7 +34,7 @@ class CAM:
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
 
-	def g_pipeline_2(self,capture_width=1280,capture_height=720,display_width=1280,display_height=720,framerate=120,flip_method=6,):
+	def g_pipeline_2(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=2 ! "
 			"video/x-raw(memory:NVMM), "
@@ -46,7 +46,7 @@ class CAM:
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
 
-	def g_pipeline_3(self,capture_width=1280,capture_height=720,display_width=1280,display_height=720,framerate=120,flip_method=6,):
+	def g_pipeline_3(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=3 ! "
 			"video/x-raw(memory:NVMM), "
