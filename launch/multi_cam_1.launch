@@ -1,0 +1,7 @@
+<launch>
+	<node pkg="multi_cam"	type="multi_cam.py"	name="multi_cam_0" output="screen">
+		<param name="/camera_ID" type="int" value="0"/>
+		<remap from="/multi_cam" to="multi_cam0" />
+	</node>
+
+</launch>

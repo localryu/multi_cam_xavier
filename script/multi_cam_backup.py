@@ -19,13 +19,7 @@ default_camera_info_url = "file://${ROS_HOME}/camera_info/${NAME}.yaml";
 
 
 class CAM:
-
-	def __init__(self):
-		rospy.init_node('multi_cam', anonymous=True)
-		self.CAM_ID = rospy.get_param('~camera_ID', 3)
-		rospy.loginfo(self.CAM_ID)
-
-	def g_pipeline0(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
+	def g_pipeline(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=30,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=0 ! "
 			"video/x-raw(memory:NVMM), "
@@ -37,7 +31,8 @@ class CAM:
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
 
-	def g_pipeline1(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
+'''
+	def g_pipeline_1(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=30,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=1 ! "
 			"video/x-raw(memory:NVMM), "
@@ -49,7 +44,7 @@ class CAM:
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
 
-	def g_pipeline2(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
+	def g_pipeline_2(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=30,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=2 ! "
 			"video/x-raw(memory:NVMM), "
@@ -61,7 +56,7 @@ class CAM:
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
 
-	def g_pipeline3(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=120,flip_method=6,):
+	def g_pipeline_3(self,capture_width=1920,capture_height=1080,display_width=1920,display_height=1080,framerate=30,flip_method=6,):
 		return (
 			"nvarguscamerasrc sensor-id=3 ! "
 			"video/x-raw(memory:NVMM), "
@@ -72,45 +67,71 @@ class CAM:
 			"videoconvert ! "
 			"video/x-raw, format=(string)BGR ! appsink"
 			% (capture_width,capture_height,framerate,flip_method,display_width,display_height,))
-
+'''
 	def run(self):
 		# Ros init
+		rospy.init_node('multi_cam', anonymous=True)
 
-		#self.CAM_ID = rospy.get_param('/ID_', 3)
+		#print(self.g_pipeline(flip_method=2))
+		cap_0 = cv2.VideoCapture(self.g_pipeline(flip_method=6), cv2.CAP_GSTREAMER)
+'''
+		#print(self.g_pipeline_1(flip_method=2))
+		cap_1 = cv2.VideoCapture(self.g_pipeline_1(flip_method=6), cv2.CAP_GSTREAMER)
+		#print(self.g_pipeline_2(flip_method=2))
+		cap_2 = cv2.VideoCapture(self.g_pipeline_2(flip_method=6), cv2.CAP_GSTREAMER)
+		#print(self.g_pipeline_3(flip_method=2))
+		cap_3 = cv2.VideoCapture(self.g_pipeline_3(flip_method=6), cv2.CAP_GSTREAMER)
+'''
 
-		if self.CAM_ID == 0 :
-			print("0")
-			cap = cv2.VideoCapture(self.g_pipeline0(flip_method=6), cv2.CAP_GSTREAMER)
-		elif self.CAM_ID == 1 :
-			print("1")
-			cap = cv2.VideoCapture(self.g_pipeline1(flip_method=6), cv2.CAP_GSTREAMER)
-		elif self.CAM_ID == 2 :
-			print("2")
-			cap = cv2.VideoCapture(self.g_pipeline2(flip_method=6), cv2.CAP_GSTREAMER)
-		elif self.CAM_ID == 3 :
-			print("3")
-			cap = cv2.VideoCapture(self.g_pipeline3(flip_method=6), cv2.CAP_GSTREAMER)
-		else :
-			print("invalid cam_id")
 
-		if (cap.isOpened()):
-			image_pub = rospy.Publisher("multi_cam",Image, queue_size=1)
+		#if (cap_0.isOpened() and cap_1.isOpened() and cap_2.isOpened() and cap_3.isOpened()):
+		if (cap_0.isOpened()):
+			#print("1")
+			image_pub0 = rospy.Publisher("multi_cam_0",Image, queue_size=1)
+'''
+			image_pub1 = rospy.Publisher("multi_cam_1",Image, queue_size=1)
+			image_pub2 = rospy.Publisher("multi_cam_2",Image, queue_size=1)
+			image_pub3 = rospy.Publisher("multi_cam_3",Image, queue_size=1)
+'''
 			bridge = CvBridge()
-			self.prev_time = 0
+			self.prev_time=0
 
 			while not rospy.is_shutdown():
 				now = time.time()
-				ret_val, img = cap.read()
-				img = cv2.flip(img, 0)
-				image_pub.publish(bridge.cv2_to_imgmsg(img, "bgr8"))
+				ret_val_0, img_0 = cap_0.read()
+'''
+				ret_val_1, img_1 = cap_1.read()
+				ret_val_2, img_2 = cap_2.read()
+				ret_val_3, img_3 = cap_3.read()
+'''
+				#now = time.time()
+				img_0 = cv2.flip(img_0, 0)
+'''
+				img_1 = cv2.flip(img_1, 0)
+				img_2 = cv2.flip(img_2, 0)
+				img_3 = cv2.flip(img_3, 0)
+'''
+				image_pub0.publish(bridge.cv2_to_imgmsg(img_0, "bgr8"))
+'''
+				image_pub1.publish(bridge.cv2_to_imgmsg(img_1, "bgr8"))
+				image_pub2.publish(bridge.cv2_to_imgmsg(img_2, "bgr8"))
+				image_pub3.publish(bridge.cv2_to_imgmsg(img_3, "bgr8"))
+'''
 				print(str(1.0/(now-self.prev_time)) + "fps")
 				self.prev_time = now
-			cap.release()
+			cap_0.release()
+'''
+			cap_1.release()
+			cap_2.release()
+			cap_3.release()
+'''
 			cv2.destroyAllWindows()
 		else:
 			print("Unable to open camera")
 
 
+
+        
 
 ################ MAIN ###################
 
