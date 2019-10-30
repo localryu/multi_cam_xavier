@@ -1,0 +1,9 @@
+export TOP_DIR=/home/ryu/top_dir \
+export RELEASE_PACK_DIR=$TOP_DIR/e-CAM20_CUXVR_JETSON_XAVIER_L4T32.1_09-JULY-2019_R01 \
+export L4T_DIR=$TOP_DIR/Linux_for_Tegra \
+export LDK_ROOTFS_DIR=$TOP_DIR/Linux_for_Tegra/rootfs \
+export ARCH=arm64 \
+export CROSS_COMPILE=aarch64-linux-gnu- \
+export CROSS32CC=arm-linux-gnueabihf-gcc \
+export TEGRA_KERNEL_OUT=$TOP_DIR/kernel_out \
+export KERNEL_PATH=$TOP_DIR/kernel_out
